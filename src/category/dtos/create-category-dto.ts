@@ -6,4 +6,5 @@ export class CreateCategoryDto {
   @MaxLength(255)
   name: string;
 
+
 }

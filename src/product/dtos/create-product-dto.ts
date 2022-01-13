@@ -1,4 +1,5 @@
-import { IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsNumber, IsObject, IsOptional, IsString, MaxLength } from "class-validator";
+import { CategoryEntity } from "src/category/entities";
 
 export class CreateProductDto {
   @IsOptional()
@@ -20,11 +21,7 @@ export class CreateProductDto {
   @MaxLength(255)
   photo: string;
 
-
-
-  @IsString()
-  @MinLength(8)
-  @MaxLength(128)
-  password: string;
+  @IsNumber()
+  readonly category: Partial<CategoryEntity>
 
 }

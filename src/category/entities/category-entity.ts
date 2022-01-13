@@ -4,12 +4,12 @@ import { ProductEntity } from "src/product/entities";
 
 @Entity('category')
 export class CategoryEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   id: number;
 
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
-  @OneToMany(type => ProductEntity, product => product.category)
+  @OneToMany(() => ProductEntity, product => product.category)
   products: ProductEntity[];
 }
