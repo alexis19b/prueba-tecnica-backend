@@ -34,10 +34,9 @@ export class ProductService {
     return await this.productRepository.save(newProduct);
   }
   async editProduct(id: number, dto: EditProductDto) {
-    const product = await this.productRepository.findOne(id)
-    if (!product) throw new NotFoundException("Producto no encontrado por id")
-    const productEdited = await this.productRepository.update(id, dto)
-    return productEdited;
+    const product = await this.getProduct(id)
+    const productEdited = Object.assign(product, dto)
+    return await this.productRepository.save(productEdited)
   }
   async removeProduct(id: number) {
     const product = await this.productRepository.findOne(id);

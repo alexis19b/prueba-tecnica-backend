@@ -8,25 +8,25 @@ export class CategoryController {
 
   @Get()
   async getMany() {
-    const data = await this.categoryService.getMany()
+    const data = await this.categoryService.getCategories()
     return { data }
   }
 
   @Get(':id')
   async getOne(@Param('id') id: number) {
-    return await this.categoryService.getOne(id)
+    return await this.categoryService.getCategory(id)
   }
   @Post()
   async createOne(@Body() dto: CreateCategoryDto) {
-    const data = await this.categoryService.createOne(dto)
+    const data = await this.categoryService.createCategory(dto)
     return {
-      message: 'Categoria Creada con Exito',
+      message: 'Categoria Creada con Exito!',
       data
     }
   }
   @Put(':id')
   async editOne(@Param('id') id: number, @Body() dto: EditCategoryDto) {
-    const data = await this.categoryService.editOne(id, dto)
+    const data = await this.categoryService.editCategory(id, dto)
     return {
       message: 'Categoria Editada con exito',
       data
@@ -35,7 +35,7 @@ export class CategoryController {
   @Delete(':id')
   async removeOne(@Param('id') id: number) {
 
-    const data = await this.categoryService.removeOne(id)
+    const data = await this.categoryService.removeCategory(id)
     return {
       message: 'Categoria eliminada con exito',
       data

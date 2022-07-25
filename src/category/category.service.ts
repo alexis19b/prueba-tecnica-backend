@@ -9,26 +9,25 @@ export class CategoryService {
 
   constructor(@InjectRepository(CategoryEntity) private readonly categoryRepository: Repository<CategoryEntity>) { }
 
-  async getMany(): Promise<CategoryEntity[]> {
+  async getCategories(): Promise<CategoryEntity[]> {
     return await this.categoryRepository.find({ relations: ['products'] })
   }
-  async getOne(id: number) {
+  async getCategory(id: number) {
     const category = await this.categoryRepository.findOne(id, { relations: ['products'] })
     if (!category) throw new NotFoundException('Categoria no encontrada')
     return category;
   }
-  async createOne(dto: CreateCategoryDto): Promise<CategoryEntity> {
+  async createCategory(dto: CreateCategoryDto): Promise<CategoryEntity> {
     const newCategory = await this.categoryRepository.create(dto);
     const category = await this.categoryRepository.save(newCategory);
     return category;
   }
-  async editOne(id: number, dto: EditCategoryDto) {
-    const category = await this.categoryRepository.findOne(id);
-    if (!category) throw new NotFoundException('Categoria no existe por id')
-    const categoryEdited = await this.categoryRepository.update(id, dto);
-    return categoryEdited;
+  async editCategory(id: number, dto: EditCategoryDto) {
+    const category = await this.getCategory(id);
+    const categoryEdited = Object.assign(category, dto);
+    return await this.categoryRepository.save(categoryEdited)
   }
-  async removeOne(id: number) {
+  async removeCategory(id: number) {
     const category = await this.categoryRepository.findOne(id);
     if (!category) throw new NotFoundException('Categoria no existe por id')
     return await this.categoryRepository.delete(id)
